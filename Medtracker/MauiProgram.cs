@@ -40,9 +40,9 @@ public static class MauiProgram
 			{
 				dataManager = storeData.ReadFromFile<DataManager>();
 			}
-			catch (Exception ex)
+			catch (InvalidOperationException ex)
 			{
-				//TODO: Handle exception.
+				System.Diagnostics.Debug.WriteLine($"CRITICAL ERROR LOADING DATA: {ex.Message}");
 
 			}
 			if (dataManager == null)

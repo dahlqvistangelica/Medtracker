@@ -16,7 +16,7 @@ public class ShowMedicationsViewModel : ObservableObject
 	}
 	public ShowMedicationsViewModel(IHandlerRepo repo)
 	{
-		_repository = _repository;
+		_repository = repo;
 		LoadMedications();
 	}
 	
