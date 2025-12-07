@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="Medtracker.AddMedicationPage"
+             Title="Add Medication">
+    <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label 
+            Text="Enter medication info:" FontSize="Medium"/>
+            <Entry Placeholder="Medication Name"
+               Text="{Binding NewMedication.Name}"/>
+            <Picker Title="Choose type.."
+                ItemsSource="{Binding AvailableMedicationTypes}" SelectedItem="{Binding SelectedMedicationType}" />
+            <VerticalStackLayout Spacing="5" IsVisible="{Binding IsScopeInputVisible}">
+                <Label Text="Input calculated medicationscope (in days):"/>
+                <Entry Placeholder="30"
+                       Keyboard="Numeric"
+                       Text="{Binding NewMedication.UserMedicationScope}"/>
+            </VerticalStackLayout>
+            <Label Text="Medicine strength:" />
+            <Entry Placeholder="Strength"
+                   Text="{Binding NewMedication.Strength}"
+                   Keyboard="Numeric"/>
+            <Label Text="Daily dosage" />
+            <Entry Placeholder="Dosage"
+                   Text="{Binding NewMedication.Dosage}"
+                   Keyboard="Numeric"/>
+            <Label Text="Total amount collected"/>
+            <Entry Placeholder="Amount collected"
+                   Text="{Binding NewMedication.AmountCollected}" 
+                   Keyboard="Numeric"/>
+            <Label Text="Prescription Collected:"/>
+            <DatePicker 
+                Date="{Binding NewMedication.PrescriptionCollected}"
+                Format="yyyy-MM-dd"
+                MaximumDate="{x:Static sys:DateTime.Today}"
+                />
+            <Button Text="Save medication" Command="{Binding SaveCommand}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
