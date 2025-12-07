@@ -11,10 +11,8 @@ namespace MedTrackConsole.Services
     {
         private readonly IHandlerRepo _repository;
 
-        //Privata fält för att hålla referensen till StoreData
+       
         private readonly IFileStorage _storeData;
-
-        //Dependency injection för att ge privata fälten värdet av de instanser av objekten vi vill
         internal MedicationHandler(IHandlerRepo repository, IFileStorage storeData)
         {
             _repository = repository;

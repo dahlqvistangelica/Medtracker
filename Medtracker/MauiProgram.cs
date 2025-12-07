@@ -58,7 +58,7 @@ public static class MauiProgram
 		});
 		//Repository registry
 		
-		builder.Services.AddSingleton<IHandlerRepo, DataManager>();
+		
 		builder.Services.AddSingleton<MainPageViewModel>();
 		
 		//Add pages

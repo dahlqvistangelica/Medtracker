@@ -82,7 +82,7 @@ namespace Medtracker.ViewModels
                 return;
             }
             _repository.medications.Add(NewMedication);
-            _fileStorage.SaveToFile(_repository.medications);
+            _fileStorage.SaveToFile(_repository);
             //Call IFileStorage to save to file.
             //Return to mainpage after saving.
             await Shell.Current.GoToAsync("..");
