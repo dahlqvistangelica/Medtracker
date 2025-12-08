@@ -5,7 +5,7 @@
              Title="Show all medications">
     <Grid RowDefinitions="Auto, *">
         <Label Grid.Row="0"
-               Text="Current medicinsupply"
+               Text="Current medication supply"
                FontSize="Title"
                FontAttributes="Bold"
                Margin="20,10,20,0"/>

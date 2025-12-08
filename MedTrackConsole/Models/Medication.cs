@@ -8,7 +8,7 @@ namespace MedTrackConsole.Models
     public class Medication
     {
         private static int MedCountForID;
-        internal int MedID;
+        public int MedID;
         public string Name { get; set; } = "Unknown";
         public decimal Dosage { get; set; }
         public decimal Strength { get; set; }
