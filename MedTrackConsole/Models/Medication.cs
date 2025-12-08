@@ -8,12 +8,12 @@ namespace MedTrackConsole.Models
     public class Medication
     {
         private static int MedCountForID;
-        public int MedID;
+        public int MedID { get; set; }
         public string Name { get; set; } = "Unknown";
         public decimal Dosage { get; set; }
         public decimal Strength { get; set; }
         public decimal AmountCollected { get; set; }
-        public bool AllCollected = false;
+        public bool AllCollected { get; set; } = false;
         public MedicationType medicationType { get; set; }
 
         public int DaysSupply

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Medtracker.Pages.ShowMedicationPage"
+             x:Name="MedicationsPage"
              Title="Show all medications">
     <Grid RowDefinitions="Auto, *">
         <Label Grid.Row="0"
@@ -14,36 +15,34 @@
                         Margin="20,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout>
+                    <VerticalStackLayout Padding="10" Margin="0,5" BackgroundColor="#f0f0f0">
 
-                        <Grid Padding="10" 
-          BackgroundColor="#f0f0f0" 
-          ColumnDefinitions="*, Auto">
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
 
                             <VerticalStackLayout Grid.Column="0">
                                 <Label Text="{Binding Name}"
-                   FontSize="Medium"
-                   FontAttributes="Bold"/>
+                                       FontSize="Medium"
+                                       FontAttributes="Bold"/>
                                 <HorizontalStackLayout Spacing="5" Margin="0,5,0,0">
                                     <Label Text="Days left:" FontAttributes="Italic"/>
                                     <Label Text="{Binding DaysLeft.TotalDays, StringFormat='{0} days'}"
-                       FontAttributes="Bold"
-                       TextColor="{Binding DaysLeft.TotalDays, Converter={StaticResource DaysToColorConverter}}"/>
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding DaysLeft.TotalDays, Converter={StaticResource DaysToColorConverter}}"/>
                                 </HorizontalStackLayout>
                                 <Label Text="{Binding Dosage, StringFormat='Dosage: {0}'}" FontSize="Small"/>
                                 <Label Text="{Binding medicationType, StringFormat='Type: {0}'}" FontSize="Small"/>
                             </VerticalStackLayout>
 
                             <Button Grid.Column="1"
-                Text="Edit"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GoToEditCommand}"
-                CommandParameter="{Binding MedID}"
-                BackgroundColor="Gold"
-                VerticalOptions="Center"
-                WidthRequest="100"/>
+                                    Text="Edit"
+                                    WidthRequest="80"
+                                    BackgroundColor="{StaticResource Primary}" 
+                                    Command="{Binding Source={x:Reference MedicationsPage}, Path=BindingContext.GoToEditCommand}"
+                                    CommandParameter="{Binding MedID}"/>
+
                         </Grid>
 
-                        <BoxView HeightRequest="1" Color="LightGray" Margin="20,0,20,0"/>
+                        <BoxView HeightRequest="1" Color="LightGray" Margin="0,5,0,0"/>
 
                     </VerticalStackLayout>
                 </DataTemplate>
