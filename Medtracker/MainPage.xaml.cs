@@ -20,6 +20,10 @@ public partial class MainPage : ContentPage
 	{
 		await Shell.Current.GoToAsync(nameof(ShowMedicationPage));
 	}
+	private async void OnRemoveMedicationClicked(object sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync(nameof(RemoveMedicationPage));
+	}
 
 	
 }
