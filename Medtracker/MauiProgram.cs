@@ -66,6 +66,9 @@ public static class MauiProgram
         builder.Services.AddTransient<AddMedicationViewModel>();
 		builder.Services.AddTransient<ShowMedicationPage>();
 		builder.Services.AddTransient<ShowMedicationsViewModel>();
+		builder.Services.AddTransient<RemoveMedicationPage>();
+		builder.Services.AddTransient<RemoveMedicationViewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

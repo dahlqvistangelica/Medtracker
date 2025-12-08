@@ -13,7 +13,7 @@
 
             <Button Text="Show medications" Clicked="OnShowMedicationClicked"></Button>
             <Button Text="Add medication" Clicked="OnAddMedicationClicked"></Button>
-            <Button Text="Remove medications"></Button>
+            <Button Text="Remove medications" Clicked="OnRemoveMedicationClicked"></Button>
         <Button Text="Edit medications"></Button>
 
     </VerticalStackLayout>
