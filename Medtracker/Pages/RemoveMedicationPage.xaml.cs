@@ -1,6 +1,6 @@
 using Medtracker.ViewModels;
 
-namespace Medtracker;
+namespace Medtracker.Pages;
 
 public partial class RemoveMedicationPage : ContentPage
 {

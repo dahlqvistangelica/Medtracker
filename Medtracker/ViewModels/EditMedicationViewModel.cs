@@ -39,8 +39,12 @@ namespace Medtracker.ViewModels
                 }
             }
         }
-        
-        //Method to calculate showstatus.
+        /// <summary>
+        /// Updates the visibility of the scope input based on the selected medication type.
+        /// </summary>
+        /// <remarks>Scope input is hidden for calculated supply types such as Injection, Pills, or Fluid.
+        /// For other medication types, the scope input is visible.</remarks>
+        /// <param name="medicationType">The medication type to evaluate when determining scope input visibility.</param>
         private void UpdateScopeVisibility(MedicationType medicationType)
         {
             bool isCalculatedSupplyType = (SelectedMedicationType == MedicationType.Injection ||
@@ -51,6 +55,12 @@ namespace Medtracker.ViewModels
 
         //Command for save button.
         public ICommand SaveChangesCommand { get; }
+        /// <summary>
+        /// Initializes a new instance of the EditMedicationViewModel class with the specified repository and file
+        /// storage service.
+        /// </summary>
+        /// <param name="repo">The repository used to access and manage medication data.</param>
+        /// <param name="fileStorage">The file storage service used for handling file operations related to medications.</param>
         public EditMedicationViewModel(IHandlerRepo repo, IFileStorage fileStorage)
         {
             _repository = repo;
@@ -59,6 +69,14 @@ namespace Medtracker.ViewModels
             //Initiate commando that run SaveMedication method.
             SaveChangesCommand = new AsyncRelayCommand(SaveChanges);
         }
+        /// <summary>
+        /// Loads the medication with the specified identifier and updates the current selection.
+        /// </summary>
+        /// <remarks>If the specified medication is found, the current medication and its type are
+        /// updated, and related UI elements are refreshed. If not found, an error message is shown to the
+        /// user.</remarks>
+        /// <param name="medicationId">The unique identifier of the medication to load. Must correspond to an existing medication; otherwise, an
+        /// error alert is displayed.</param>
         public void LoadMedication(int medicationId)
         {
             CurrentMedication = _repository.medications.FirstOrDefault(m => m.MedID == medicationId);
@@ -74,6 +92,14 @@ namespace Medtracker.ViewModels
                 Shell.Current.DisplayAlert("Error", "Medication not found", "Ok");
             }
         }
+        /// <summary>
+        /// Validates the current medication entry and saves changes to persistent storage asynchronously. Displays
+        /// appropriate alerts for validation errors or successful updates.
+        /// </summary>
+        /// <remarks>If validation fails, an error alert is displayed and the save operation is not
+        /// performed. Upon successful save, a confirmation alert is shown and navigation returns to the previous
+        /// page.</remarks>
+        /// <returns>A task that represents the asynchronous save operation.</returns>
         private async Task SaveChanges()
         {
             if (CurrentMedication == null) return;

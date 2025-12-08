@@ -40,7 +40,11 @@ namespace Medtracker.ViewModels
                 }
             }
         }
-        //Method to calculate showstatus.
+
+        /// <summary>
+        /// Updates the visibility of the scope input based on the specified medication type.
+        /// </summary>
+        /// <param name="medicationType">The medication type used to determine whether the scope input should be visible.</param>
         private void UpdateScopeVisibility(MedicationType medicationType)
         {
             bool isCalculatedSupplyType = (SelectedMedicationType == MedicationType.Injection ||
@@ -61,6 +65,15 @@ namespace Medtracker.ViewModels
             //Initiate commando that run SaveMedication method.
             SaveCommand = new Command(async () => await SaveMedication());
         }
+        /// <summary>
+        /// Validates and saves the current medication entry to persistent storage asynchronously. Displays error
+        /// messages for invalid input and navigates back to the previous page upon successful save.
+        /// </summary>
+        /// <remarks>Validation includes checking that the medication name is not empty, dosage and
+        /// strength are positive values, and the prescription collection date is not in the future. If any validation
+        /// fails, an error alert is displayed and the save operation is aborted. Upon successful save, the method
+        /// navigates back to the main page.</remarks>
+        /// <returns>A task that represents the asynchronous save operation.</returns>
         private async Task SaveMedication()
         {
             if(string.IsNullOrWhiteSpace(NewMedication.Name))

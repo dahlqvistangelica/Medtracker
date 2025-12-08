@@ -79,13 +79,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="AddMedicationPage.xaml">
+	  <MauiXaml Update="Pages\AddMedicationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="RemoveMedicationPage.xaml">
+	  <MauiXaml Update="Pages\EditMedicationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ShowMedicationPage.xaml">
+	  <MauiXaml Update="Pages\RemoveMedicationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ShowMedicationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

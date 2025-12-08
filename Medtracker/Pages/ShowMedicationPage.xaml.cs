@@ -1,6 +1,6 @@
 using Medtracker.ViewModels;
 using Microsoft.Maui.Controls;
-namespace Medtracker;
+namespace Medtracker.Pages;
 
 public partial class ShowMedicationPage : ContentPage
 {

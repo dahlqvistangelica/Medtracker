@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Medtracker.Interfaces;
 using Medtracker.Services;
+using Medtracker.Pages;
 using MedTrackConsole.Persistence;
 using MedTrackConsole.Interfaces;
 using MedTrackConsole.Services;
@@ -68,6 +69,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<ShowMedicationsViewModel>();
 		builder.Services.AddTransient<RemoveMedicationPage>();
 		builder.Services.AddTransient<RemoveMedicationViewModel>();
+		builder.Services.AddTransient<EditMedicationPage>();
+		builder.Services.AddTransient<EditMedicationViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

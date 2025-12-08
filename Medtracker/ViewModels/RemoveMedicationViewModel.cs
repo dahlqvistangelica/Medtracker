@@ -44,7 +44,14 @@ namespace Medtracker.ViewModels
             }
         }
         public ICommand RemoveCommand { get; }
-       
+       /// <summary>
+       /// Loads medications from the repository into the medications list, applying the current search filter if
+       /// specified.
+       /// </summary>
+       /// <remarks>Clears the existing medications list before loading. Only medications whose names
+       /// contain the search filter (case-insensitive) are included, and the resulting list is ordered by the number of
+       /// days left. This method should be called to refresh the displayed medications after updating the search filter
+       /// or the underlying data.</remarks>
         public void LoadMedications()
         {
             MedicationsList.Clear();
@@ -59,6 +66,15 @@ namespace Medtracker.ViewModels
                 MedicationsList.Add(med);
             }
         }
+        /// <summary>
+        /// Asynchronously removes the specified medication from the repository and updates the medication list after
+        /// user confirmation.
+        /// </summary>
+        /// <remarks>The user is prompted to confirm the removal before any changes are made. If the user
+        /// does not confirm, the medication is not removed. The repository is persisted after a successful
+        /// removal.</remarks>
+        /// <param name="medicationToRemove">The medication to remove from the repository and the displayed list. If null, no action is taken.</param>
+        /// <returns>A task that represents the asynchronous remove operation.</returns>
         private async Task RemoveMedicationAsync(Medication? medicationToRemove)
         {
             if(medicationToRemove == null)

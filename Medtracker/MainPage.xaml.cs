@@ -1,4 +1,5 @@
 ﻿using Medtracker.ViewModels;
+using Medtracker.Pages;
 namespace Medtracker;
 
 public partial class MainPage : ContentPage
