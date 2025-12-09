@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="MedTrackConsole/MedTrackConsole.csproj" Id="125cfca3-6afd-40db-b222-5497b92ec09b" />
   <Project Path="Medtracker/Medtracker.csproj">
-    <Deploy Solution="Debug|*" />
+    <Deploy />
   </Project>
 </Solution>
