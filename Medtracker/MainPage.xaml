@@ -1,14 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Medtracker.MainPage">
+             x:Class="Medtracker.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9FAFB"> <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+            
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center" Margin="0,20,0,10">
+                <Border StrokeShape="RoundRectangle 20"
+                        HeightRequest="80"
+                        WidthRequest="80"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#2563EB" Offset="0.0" /> <GradientStop Color="#4F46E5" Offset="1.0" /> </LinearGradientBrush>
+                    </Border.Background>
+                    <Image Source="medtrackerlogo.png" Aspect="AspectFit" Margin="15"/>
+                </Border>
 
-    <ScrollView>
-    <VerticalStackLayout Spacing="15" Padding="20">
+                <Label Text="MedTracker" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       TextColor="#1E3A8A" 
+                       HorizontalOptions="Center"/>
+                
+                <Label Text="Håll koll på dina mediciner" 
+                       FontSize="16" 
+                       TextColor="#4B5563" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
 
-            <Button Text="Show medications" Clicked="OnShowMedicationClicked"></Button>
-            <Button Text="Add medication" Clicked="OnAddMedicationClicked"></Button>
-            <Button Text="Remove medications" Clicked="OnRemoveMedicationClicked"></Button>
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                <Border Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="White" Padding="16" StrokeThickness="0">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,1" Radius="2" Opacity="0.05"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout>
+                        <Label Text="Totalt" TextColor="#4B5563" FontSize="14"/>
+                        <Label Text="{Binding TotalMedicationsCount}" TextColor="#1E3A8A" FontSize="30" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <Border Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="White" Padding="16" StrokeThickness="0">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,1" Radius="2" Opacity="0.05"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout>
+                        <Label Text="Lågt lager" TextColor="#4B5563" FontSize="14"/>
+                        <Label Text="{Binding LowStockCount}" TextColor="#D97706" FontSize="30" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <VerticalStackLayout Spacing="16">
+                
+                <Button Text="Visa mediciner"
+                        Command="{Binding GoToShowMedicationsCommand}"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="12"
+                        HeightRequest="60">
+                    <Button.Shadow>
+                        <Shadow Brush="#2563EB" Offset="0,4" Radius="10" Opacity="0.3"/>
+                    </Button.Shadow>
+                </Button>
+
+                <Button Text="Lägg till medicin"
+                        Command="{Binding GoToAddMedicationCommand}"
+                        BackgroundColor="White"
+                        TextColor="#1E3A8A"
+                        BorderColor="#DBEAFE"
+                        BorderWidth="2"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="12"
+                        HeightRequest="60"/>
+
+                <Button Text="Ta bort mediciner"
+                        Command="{Binding GoToRemoveMedicationCommand}"
+                        BackgroundColor="White"
+                        TextColor="#DC2626"
+                        BorderColor="#FEE2E2"
+                        BorderWidth="2"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="12"
+                        HeightRequest="60"/>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

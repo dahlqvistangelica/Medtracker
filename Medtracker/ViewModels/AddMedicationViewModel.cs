@@ -1,104 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MedTrackConsole.Interfaces;
 using MedTrackConsole.Models;
-using Medtracker.ViewModels;
-using System.ComponentModel;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
-using MedTrackConsole.Services;
+using System.Collections.ObjectModel;
 
-namespace Medtracker.ViewModels
+namespace Medtracker.ViewModels;
+
+public partial class AddMedicationViewModel : ObservableObject
 {
-    public class AddMedicationViewModel: ObservableObject
+    private readonly IHandlerRepo _repository;
+    private readonly IFileStorage _fileStorage;
+
+    [ObservableProperty]
+    private string name;
+
+    [ObservableProperty]
+    private string strength;
+
+    [ObservableProperty]
+    private string dosage;
+
+    [ObservableProperty]
+    private string amountCollected;
+
+    [ObservableProperty]
+    private DateTime prescriptionCollected = DateTime.Today;
+
+    [ObservableProperty]
+    private MedicationType selectedMedicationType;
+
+    public List<MedicationType> AvailableMedicationTypes { get; } = Enum.GetValues(typeof(MedicationType)).Cast<MedicationType>().ToList();
+
+    public AddMedicationViewModel(IHandlerRepo repo, IFileStorage fileStorage)
     {
-        private readonly IHandlerRepo _repository;
-        private readonly IFileStorage _fileStorage;
-        public List<MedicationType> AvailableMedicationTypes { get; }
-        //Property to hold new medication (binding)
-        public Medication NewMedication { get; set; } = new Medication();
-        //Field to hold showstatus
-        private bool _isScopeInputVisible;
-        public bool IsScopeInputVisible
-        {
-            get => _isScopeInputVisible;
-            set => SetProperty(ref _isScopeInputVisible, value);
-        }
-        //Property and field for medicationtype
-        private MedicationType _selectedMedicationType;
-        public MedicationType SelectedMedicationType
-        {
-            get => _selectedMedicationType;
-            set
-            {
-                if(SetProperty(ref _selectedMedicationType, value))
-                {
-                    NewMedication.medicationType = value;
+        _repository = repo;
+        _fileStorage = fileStorage;
+    }
 
-                    UpdateScopeVisibility(value);
-                }
-            }
+    // VIKTIGT: Detta genererar 'SaveMedicationCommand' som XAML-koden letar efter
+    [RelayCommand]
+    private async Task SaveMedication()
+    {
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            await Shell.Current.DisplayAlert("Fel", "Du måste ange ett namn", "OK");
+            return;
         }
 
-        /// <summary>
-        /// Updates the visibility of the scope input based on the specified medication type.
-        /// </summary>
-        /// <param name="medicationType">The medication type used to determine whether the scope input should be visible.</param>
-        private void UpdateScopeVisibility(MedicationType medicationType)
-        {
-            bool isCalculatedSupplyType = (SelectedMedicationType == MedicationType.Injection ||
-                                            SelectedMedicationType == MedicationType.Pills ||
-                                            SelectedMedicationType == MedicationType.Fluid);
-            IsScopeInputVisible = !isCalculatedSupplyType;
-        }
+        // Konvertera strängar till decimaler/int säkert
+        if (!decimal.TryParse(Strength, out decimal strengthVal)) strengthVal = 0;
+        if (!decimal.TryParse(Dosage, out decimal dosageVal)) dosageVal = 0;
+        if (!decimal.TryParse(AmountCollected, out decimal amountVal)) amountVal = 0;
 
-        //Command for save button.
-        public ICommand SaveCommand { get; }
-        public AddMedicationViewModel(IHandlerRepo repo, IFileStorage fileStorage)
+        var newMed = new Medication
         {
-            _repository = repo;
-            _fileStorage = fileStorage;
-            AvailableMedicationTypes = Enum.GetValues<MedicationType>().ToList();
-            _selectedMedicationType = NewMedication.medicationType;
-            UpdateScopeVisibility(NewMedication.medicationType);
-            //Initiate commando that run SaveMedication method.
-            SaveCommand = new Command(async () => await SaveMedication());
-        }
-        /// <summary>
-        /// Validates and saves the current medication entry to persistent storage asynchronously. Displays error
-        /// messages for invalid input and navigates back to the previous page upon successful save.
-        /// </summary>
-        /// <remarks>Validation includes checking that the medication name is not empty, dosage and
-        /// strength are positive values, and the prescription collection date is not in the future. If any validation
-        /// fails, an error alert is displayed and the save operation is aborted. Upon successful save, the method
-        /// navigates back to the main page.</remarks>
-        /// <returns>A task that represents the asynchronous save operation.</returns>
-        private async Task SaveMedication()
-        {
-            if(string.IsNullOrWhiteSpace(NewMedication.Name))
-            {
-                await Shell.Current.DisplayAlert("Error", "Medication must have a name", "Ok");
-                return;
-            }
-            if(NewMedication.Dosage < 0)
-            {
-                await Shell.Current.DisplayAlert("Error", "Dosage must be more than 0", "Ok");
-            }
-            if(NewMedication.Strength <0)
-            {
-                await Shell.Current.DisplayAlert("Error", "Strenght must be more than 0", "Ok");
-            }
-            if(NewMedication.PrescriptionCollected > DateTime.Today)
-            {
-                await Shell.Current.DisplayAlert("Error", "Collection date can't be in the future", "OK");
-                return;
-            }
-            _repository.medications.Add(NewMedication);
-            _fileStorage.SaveToFile(_repository);
-            //Call IFileStorage to save to file.
-            //Return to mainpage after saving.
-            await Shell.Current.GoToAsync("..");
-        }
+            Name = Name,
+            Strength = strengthVal,
+            Dosage = dosageVal,
+            AmountCollected = amountVal,
+            PrescriptionCollected = PrescriptionCollected,
+            medicationType = SelectedMedicationType
+        };
+
+        _repository.medications.Add(newMed);
+        _fileStorage.SaveToFile(_repository);
+
+        await Shell.Current.DisplayAlert("Klart", $"{Name} har sparats!", "OK");
+        await Shell.Current.GoToAsync(".."); // Gå tillbaka
+    }
+    [RelayCommand]
+    private async Task GoBack()
+    {
+        await Shell.Current.GoToAsync(".."); // ".." betyder "gå upp en nivå" (tillbaka)
     }
 }

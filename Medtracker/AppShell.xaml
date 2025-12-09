@@ -6,15 +6,7 @@
     xmlns:local="clr-namespace:Medtracker"
     Title="Medtracker">
     
-    <Shell.TitleView>
-        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Spacing="8">
 
-            <Image Source="medtrackerlogo.png" HeightRequest="40" Aspect="AspectFit"/>
-
-            <Label Text="MedTracker" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
-
-        </HorizontalStackLayout>
-    </Shell.TitleView>
     <ShellContent
         Title=""
         ContentTemplate="{DataTemplate local:MainPage}"

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 namespace Medtracker.ViewModels;
 
-public class ShowMedicationsViewModel : ObservableObject
+public partial class ShowMedicationsViewModel : ObservableObject
 {
 	private readonly IHandlerRepo _repository;
 	private ObservableCollection<Medication> _medicationsList = new();
@@ -46,4 +46,9 @@ public class ShowMedicationsViewModel : ObservableObject
 	{
 		await Shell.Current.GoToAsync($"{nameof(EditMedicationPage)}?MedicationId={medicationId}");
 	}
+    [RelayCommand]
+    private async Task GoBack()
+    {
+        await Shell.Current.GoToAsync(".."); // ".." betyder "gå upp en nivå" (tillbaka)
+    }
 }

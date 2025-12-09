@@ -22,7 +22,7 @@
 		<ApplicationTitle>Medtracker</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.medtracker</ApplicationId>
+		<ApplicationId>com.angelicadahlqvist.medtracker</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

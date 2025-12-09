@@ -1,42 +1,84 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:sys="clr-namespace:System;assembly=netstandard"
              x:Class="Medtracker.Pages.AddMedicationPage"
-             Title="Add Medication">
+             Title="Ny Medicin"
+             x:Name="AddPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9FAFB">
+
     <ScrollView>
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Label 
-            Text="Enter medication info:" FontSize="Medium"/>
-            <Entry Placeholder="Medication Name"
-               Text="{Binding NewMedication.Name}"/>
-            <Picker Title="Choose type.."
-                ItemsSource="{Binding AvailableMedicationTypes}" SelectedItem="{Binding SelectedMedicationType}" />
-            <VerticalStackLayout Spacing="5" IsVisible="{Binding IsScopeInputVisible}">
-                <Label Text="Input calculated medicationscope (in days):"/>
-                <Entry Placeholder="30"
-                       Keyboard="Numeric"
-                       Text="{Binding NewMedication.UserMedicationScope}"/>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <HorizontalStackLayout Spacing="15">
+                <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Stroke="#E5E7EB" HeightRequest="40" WidthRequest="40">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={x:Reference AddPage}, Path=BindingContext.GoBackCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="⬅" VerticalOptions="Center" HorizontalOptions="Center" TextColor="#374151"/>
+                </Border>
+                <Label Text="Registrera ny medicin" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="#1E3A8A"/>
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout Spacing="16">
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Namn på medicin" TextColor="#374151" FontAttributes="Bold"/>
+                    <Border Stroke="#D1D5DB" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12,0">
+                        <Entry Placeholder="T.ex. Alvedon" Text="{Binding Name}" TextColor="#111827"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Typ" TextColor="#374151" FontAttributes="Bold"/>
+                    <Border Stroke="#D1D5DB" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12,0">
+                        <Picker Title="Välj form" 
+                                ItemsSource="{Binding AvailableMedicationTypes}" 
+                                SelectedItem="{Binding SelectedMedicationType}"
+                                TextColor="#111827"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label Text="Styrka" TextColor="#374151" FontAttributes="Bold"/>
+                        <Border Stroke="#D1D5DB" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12,0">
+                            <Entry Placeholder="Mg/ml" Keyboard="Numeric" Text="{Binding Strength}" TextColor="#111827"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                        <Label Text="Daglig dos" TextColor="#374151" FontAttributes="Bold"/>
+                        <Border Stroke="#D1D5DB" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12,0">
+                            <Entry Placeholder="Antal" Keyboard="Numeric" Text="{Binding Dosage}" TextColor="#111827"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Antal uthämtade" TextColor="#374151" FontAttributes="Bold"/>
+                    <Border Stroke="#D1D5DB" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12,0">
+                        <Entry Placeholder="Total mängd i förpackningen" Keyboard="Numeric" Text="{Binding AmountCollected}" TextColor="#111827"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Uthämtningsdatum" TextColor="#374151" FontAttributes="Bold"/>
+                    <Border Stroke="#D1D5DB" StrokeShape="RoundRectangle 8" BackgroundColor="White" Padding="12,0">
+                        <DatePicker Date="{Binding PrescriptionCollected}" Format="yyyy-MM-dd" TextColor="#111827"/>
+                    </Border>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-            <Label Text="Medicine strength:" />
-            <Entry Placeholder="Strength"
-                   Text="{Binding NewMedication.Strength}"
-                   Keyboard="Numeric"/>
-            <Label Text="Daily dosage" />
-            <Entry Placeholder="Dosage"
-                   Text="{Binding NewMedication.Dosage}"
-                   Keyboard="Numeric"/>
-            <Label Text="Total amount collected"/>
-            <Entry Placeholder="Amount collected"
-                   Text="{Binding NewMedication.AmountCollected}" 
-                   Keyboard="Numeric"/>
-            <Label Text="Prescription Collected:"/>
-            <DatePicker 
-                Date="{Binding NewMedication.PrescriptionCollected}"
-                Format="yyyy-MM-dd"
-                MaximumDate="{x:Static sys:DateTime.Today}"
-                />
-            <Button Text="Save medication" Command="{Binding SaveCommand}"/>
+
+            <Button Text="Spara medicin"
+                    Command="{Binding SaveMedicationCommand}"
+                    Margin="0,20,0,0"
+                    BackgroundColor="#2563EB"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
